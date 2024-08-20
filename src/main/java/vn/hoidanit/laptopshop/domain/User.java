@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-
+@Table(name="users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,15 @@ public class User {
     private String fullName;
     private String address;
     private String phone;
+    private String avatar;
 
     
+    public String getAvatar() {
+        return avatar;
+    }
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
     // public User(long id, String password, String fullName, String address, String phone) {
     //     this.id = id;
     //     this.password = password;
@@ -63,12 +70,13 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
     @Override
     public String toString() {
-        return "User [id=" + id + ", password=" + password + ", fullName=" + fullName + ", address=" + address
-                + ", phone=" + phone + ", email" + email + "]";
+        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
+                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
     }
+
+   
 
     
 }
