@@ -1,4 +1,4 @@
-package vn.hoidanit.laptopshop.controller;
+package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
 
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @Controller
 
 public class UserController {
@@ -39,28 +38,32 @@ public class UserController {
         String test = this.userService.handleHello();
         return "hello";
     }
+
     @RequestMapping("/admin/user/create")
     public String getUserPageCreate(Model model) {
         model.addAttribute("newUser", new User());
         return "admin/user/create";
     }
+
     @RequestMapping("/admin/user")
     public String getUserPage(Model model) {
         List<User> users = this.userService.getAllUser();
         model.addAttribute("users", users);
-        return "admin/user/table-user";
+        return "admin/user/show";
     }
+
     @RequestMapping("/admin/user/{id}")
     public String getUserDetailPage(Model model, @PathVariable long id) {
         User user = this.userService.getUserById(id);
         // System.out.println(user);
         model.addAttribute("user", user);
         model.addAttribute("id", id);
-        
-        return "admin/user/show";
+
+        return "admin/user/detail";
     }
+
     @RequestMapping("/admin/user/update/{id}")
-    public String getUserUpdate(Model model,@PathVariable long id) {
+    public String getUserUpdate(Model model, @PathVariable long id) {
         User currentUser = this.userService.getUserById(id);
         model.addAttribute("newUser", currentUser);
         return "admin/user/update";
@@ -76,7 +79,7 @@ public class UserController {
     @PostMapping("/admin/user/update")
     public String postUserUpdate(Model model, @ModelAttribute("newUser") User hoidanit) {
         User currentUser = this.userService.getUserById(hoidanit.getId());
-        if(currentUser != null){
+        if (currentUser != null) {
             currentUser.setAddress(hoidanit.getAddress());
             currentUser.setFullName(hoidanit.getFullName());
             currentUser.setPhone(hoidanit.getPhone());
@@ -95,14 +98,13 @@ public class UserController {
         model.addAttribute("newUser", user);
         return "admin/user/delete";
     }
- 
+
     @PostMapping("/admin/user/delete")
     public String postDeleteUser(Model model, @ModelAttribute("newUser") User user) {
-       this.userService.deleteUser(user.getId());
+        this.userService.deleteUser(user.getId());
         return "redirect:/admin/user";
     }
- 
-    
+
 }
 
 // @RestController
