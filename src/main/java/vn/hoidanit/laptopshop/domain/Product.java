@@ -1,5 +1,7 @@
 package vn.hoidanit.laptopshop.domain;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +15,10 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -24,7 +29,6 @@ public class Product {
 
     @NotNull
     @DecimalMin(value = "0", inclusive = false, message = "Price phải lớn hơn 0")
-
     private double price;
 
     private String image;
@@ -46,16 +50,16 @@ public class Product {
     private String factory;
     private String target;
 
-    public String getName() {
-        return name;
-    }
-
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
