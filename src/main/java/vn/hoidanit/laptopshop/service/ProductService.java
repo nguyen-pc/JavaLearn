@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import vn.hoidanit.laptopshop.domain.Product;
+import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.repository.ProductRepository;
 
 @Service
@@ -22,4 +23,13 @@ public class ProductService {
     public List<Product> fetchProduct() {
         return this.productRepository.findAll();
     }
+
+    public void deleteProduct(long id) {
+        this.productRepository.deleteById(id);
+    }
+
+    public Product getProductById(long id) {
+        return this.productRepository.findById(id);
+    }
+
 }
