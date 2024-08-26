@@ -10,12 +10,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.ServletContext;
+import jakarta.validation.Valid;
 import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
 import vn.hoidanit.laptopshop.domain.User;
@@ -65,6 +68,7 @@ public class UserController {
     @RequestMapping("/admin/user")
     public String getUserPage(Model model) {
         List<User> users = this.userService.getAllUser();
+        // System.out.println("Check user" + users);
         model.addAttribute("users", users);
         return "admin/user/show";
     }
@@ -87,9 +91,20 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/create1")
-    public String createUserPage(Model model, @ModelAttribute("newUser") User hoidanit,
+    public String createUserPage(Model model, @ModelAttribute("newUser") @Valid User hoidanit,
+            BindingResult NewUserBindingResult,
             @RequestParam("hoidanitFile") MultipartFile file) {
 
+        List<FieldError> errors = NewUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println("<<<<<" + error.getField() + "-" + error.getDefaultMessage());
+        }
+        // validate date
+        if (NewUserBindingResult.hasErrors()) {
+            return "/admin/user/create";
+        }
+
+        //
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(hoidanit.getPassword());
         System.out.println("Run heare" + hoidanit);
