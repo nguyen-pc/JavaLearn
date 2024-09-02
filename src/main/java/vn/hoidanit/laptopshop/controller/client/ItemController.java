@@ -120,10 +120,15 @@ public class ItemController {
         long id = (long) session.getAttribute("id");
         currentUser.setId(id);
 
-        // this.productService.handlePlaceOrder(currentUser, session, receiverName,
-        // receiverAddress, receiverPhone);
+        this.productService.handlePlaceOrder(currentUser, session, receiverName,
+                receiverAddress, receiverPhone);
 
         return "redirect:/thanks";
+    }
+
+    @GetMapping("/thanks")
+    public String getThankYouPage(Model model) {
+        return "client/cart/thanks";
     }
 
 }
