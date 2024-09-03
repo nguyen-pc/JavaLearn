@@ -112,8 +112,8 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                            <!-- <form action="/add-product-from-view-detail" method="post"
-                                                modelAttribute="product"> -->
+                                            <form action="/add-product-from-view-detail" method="post"
+                                                modelAttribute="product">
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                             <input class="form-control d-none" type="text" value="${product.id}"
                                                 name="id" />
@@ -125,7 +125,7 @@
                                                     class="fa fa-shopping-bag me-2 text-primary"></i>
                                                 Add to cart
                                             </button>
-                                            <!-- </form> -->
+                                            </form>
 
                                         </div>
                                         <div class="col-lg-12">
